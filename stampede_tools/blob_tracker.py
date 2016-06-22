@@ -8,6 +8,8 @@ import os
 
 def track_blobs(params):
 
+    cv_major_ver, cv_minor_ver, _ = cv2.__version__.split('.')
+
     input_video = params['input_video'] 
     background_file = params['background_file']
     median_centroid_file = params["median_centroid_file"]
@@ -51,14 +53,17 @@ def track_blobs(params):
     
         # Find blobs - get list of blob contours
         frame_tmp = scipy.array(frame_opn)
-        contour_list, dummy = cv2.findContours(frame_tmp, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        if cv_major_ver < 3:
+            contour_list, dummy = cv2.findContours(frame_tmp, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        else:
+            _, contour_list, heirarchy = cv2.findContours(frame_tmp, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     
         # Filter blobs and find blob centroids
         blob_list = []
         centroid_list = []
         for contour in contour_list:
             area = cv2.contourArea(contour)
-            if area >= blob_area_min and area < blob_area_max:
+            if area >= blob_area_min and area <= blob_area_max:
                 moments = cv2.moments(contour)
                 centroid_x = moments['m10']
                 if moments['m00'] > 0:  
@@ -88,7 +93,10 @@ def track_blobs(params):
         median_centroid_fid.write('{0} {1}{2}'.format(cnt,median_centroid[0],os.linesep))
     
         if cnt == 0:
-            fourcc = cv2.cv.CV_FOURCC(*'xvid')
+            if cv_major_ver < 3:
+                fourcc = cv2.cv.CV_FOURCC(*'xvid')
+            else:
+                fourcc = cv2.VideoWriter_fourcc(*'xvid')
             n = frame_cmp.shape[1]
             m = frame_cmp.shape[0]
             vidout.open(tracking_output_video,fourcc,30,(n,m),True)
