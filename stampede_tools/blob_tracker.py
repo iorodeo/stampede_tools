@@ -9,6 +9,8 @@ import os
 def track_blobs(params):
 
     cv_major_ver, cv_minor_ver, _ = cv2.__version__.split('.')
+    cv_major_ver = int(cv_major_ver)
+    cv_minor_ver = int(cv_minor_ver)
 
     input_video = params['input_video'] 
     background_file = params['background_file']
