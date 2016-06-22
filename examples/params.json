@@ -1,0 +1,13 @@
+{
+    "input_video" : "bias_video_cam_0_date_2016_02_11_time_10_50_14_v001.avi",
+    "background_file" : "background.png",
+    "median_centroid_file" : "median_centroid.txt",
+    "background_frame_skip" : 10,
+    "background_threshold"  : 90,
+    "background_check_roi"  : false,
+    "roi_cols" : [0,1280],
+    "roi_rows" : [350,470],
+    "open_kernel_size" :  [3,3],
+    "blob_area_min" : 10,
+    "blob_area_max" : 400 
+}
