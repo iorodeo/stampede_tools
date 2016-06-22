@@ -1,4 +1,7 @@
 from setuptools import setup, find_packages
+import os.path
+import platform
+
 
 setup( 
         name='stampede_tools', 
@@ -7,7 +10,12 @@ setup(
         author = 'William Dickson, IO Rodeo Inc.',
         author_email = 'will@iorodeo.com',
         packages=find_packages(),
-        scripts=[ 'bin/stampede-tools'],
+        #scripts=[ os.path.join('bin','stampede-tools')],
+        entry_points = {
+            'console_scripts' : [
+                'stampede-tools = stampede_tools.commandline_app:main',
+                ]
+            },
         license='LICENSE.txt'
         )
 

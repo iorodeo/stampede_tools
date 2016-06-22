@@ -1,3 +1,0 @@
-#!/usr/bin/env python
-from stampede_tools import commandline_app 
-commandline_app.main()
