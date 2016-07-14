@@ -117,7 +117,7 @@ def track_blobs(params):
     vidin.release()
     vidout.release()
     cv2.destroyAllWindows()
-    median_centriod_fid.close()
+    median_centroid_fid.close()
 
 # -----------------------------------------------------------------------------
 if __name__ == '__main__':
